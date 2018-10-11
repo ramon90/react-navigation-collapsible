@@ -1,9 +1,9 @@
 import React, {Component} from 'react';
-import { Text, FlatList, Animated, TouchableOpacity } from 'react-native';
+import { Text, SectionList, Animated, TouchableOpacity } from 'react-native';
 
 import { withCollapsible } from 'react-navigation-collapsible';
 
-const AnimatedFlatList = Animated.createAnimatedComponent(FlatList);
+const AnimatedSectionList = Animated.createAnimatedComponent(SectionList);
 
 class FlatListScreen extends Component{
   static navigationOptions = {
@@ -40,22 +40,29 @@ class FlatListScreen extends Component{
   render(){
     const { paddingHeight, scrollY, onScroll } = this.props.collapsible;
 
-    return (
-      <AnimatedFlatList 
-        style={{flex: 1}}
-        data={this.state.data}
-        renderItem={this.renderItem}
-        keyExtractor={(item, index) => String(index)}
+    const data = [];
+    for(let i = 0 ; i < 40 ; i++){
+      data.push(i.toString());
+    }
 
-        contentContainerStyle={{paddingTop: paddingHeight}}
+    return (
+      <AnimatedSectionList
+        renderItem={({item, index, section}) => <Text key={index}>{item}</Text>}
+        renderSectionHeader={({section: {title}}) => (
+          <Text style={{fontWeight: 'bold'}}>{title}</Text>
+        )}
+        sections={[
+          {title: 'Title1', data: data},
+          {title: 'Title2', data: data},
+          {title: 'Title3', data: data},
+        ]}
+        keyExtractor={(item, index) => item + index}
+
+        style={{paddingTop: paddingHeight}}
         scrollIndicatorInsets={{top: paddingHeight}}
         onScroll={onScroll} 
-        // if you want to use 'onScroll' callback.
-        // onScroll={Animated.event(
-        //   [{nativeEvent: {contentOffset: {y: scrollY}}}],
-        //   {useNativeDriver:true, listener:this.onScroll})} 
         _mustAddThis={scrollY}
-        />
+      />
     )
   }
 }
