@@ -30,7 +30,7 @@
     "react-navigation": "*"
   },
   "dependencies": {
-    "hoist-non-react-statics": "^3.0.1"
+    "hoist-non-react-statics": "^3.3.1"
   },
   "devDependencies": {
     "babel-eslint": "^10.0.1",
