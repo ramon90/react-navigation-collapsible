@@ -5,16 +5,21 @@ import {
   createStackNavigator,
   StackNavigationProp,
 } from '@react-navigation/stack';
+import {RouteProp} from '@react-navigation/core';
 import 'react-native-gesture-handler';
-import {CollapsibleStack} from 'react-navigation-collapsible';
+import {
+  CollapsibleStack,
+  CollapsibleProps,
+  useCollapsibleStack,
+} from 'react-navigation-collapsible';
 
 import {S1RegularScreen} from './src/S1-RegularHeaderScreen';
 import {DetailScreen} from './src/DetailScreen';
 
-type StackParamList = {
+export type StackParamList = {
   Home: undefined;
   Detail: undefined;
-  'S1-Regular': undefined;
+  'S1-Regular': CollapsibleProps;
 };
 
 export type ScreenProps = {
@@ -22,6 +27,7 @@ export type ScreenProps = {
 };
 
 function HomeScreen({navigation}: ScreenProps) {
+  console.log('----------------- c2', useCollapsibleStack);
   return (
     <View style={{flex: 1, paddingTop: 50, alignItems: 'center'}}>
       <Text

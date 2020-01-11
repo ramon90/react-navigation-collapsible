@@ -1,21 +1,38 @@
 import * as React from 'react';
 import {Text, TouchableOpacity, Animated} from 'react-native';
+import {StackNavigationProp} from '@react-navigation/stack';
+import {useCollapsibleStack} from 'react-navigation-collapsible';
 
-import {ScreenProps} from '../App';
-import {CollapsibleProps} from 'react-navigation-collapsible';
+import {StackParamList} from '../App';
 
 const data: number[] = [];
 for (let i = 0; i < 100; i++) {
   data.push(i);
 }
 
-type Props = ScreenProps & CollapsibleProps;
+export type ScreenProps = {
+  navigation: StackNavigationProp<StackParamList>;
+};
 
-const S1RegularScreen = ({navigation, collapsible}: Props) => {
-  const {onScroll, containerPaddingTop} = collapsible || {};
+const S1RegularScreen = ({navigation}: ScreenProps) => {
+  const [d, setD] = React.useState(data);
+  React.useEffect(() => {
+    const del = () => {
+      setD(prevD => {
+        const [first, ...rest] = prevD;
+        return rest;
+      });
+      setTimeout(del, 1000);
+    };
+    setTimeout(del, 1000);
+  }, []);
+
+  const {onScroll, containerPaddingTop} = {}; //useCollapsibleStack();
+  console.log('------------- c2-1:', useCollapsibleStack);
+
   return (
     <Animated.FlatList
-      data={data}
+      data={d}
       onScroll={onScroll}
       contentContainerStyle={{paddingTop: containerPaddingTop}}
       // scrollIndicatorInsets={{top: containerPaddingTop}}

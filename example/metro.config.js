@@ -3,6 +3,7 @@ const extraModules = [
   'react',
   'react-native',
   '@react-navigation/stack',
+  '@react-navigation/native',
 ];
 
 module.exports = {
