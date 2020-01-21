@@ -125,10 +125,10 @@ class _CollapsibleHeaderBackView extends Component {
   }
 
   render(){
-    if(Platform.OS.match(/android|web/))
-      return null;
+    // if(Platform.OS.match(/android|web/))
+    //   return null;
 
-    const { isLandscape, navigation, iOSCollapsedColor = 'black' } = this.props;
+    const { isLandscape, navigation, iOSCollapsedColor = '#fff' } = this.props;
     if(!this.state.isShow || !navigation || !navigation.state.params || !navigation.state.params.animatedDiffClampY || !navigation.state.params.headerHeight)
       return null;
 
@@ -139,12 +139,15 @@ class _CollapsibleHeaderBackView extends Component {
     return (
       <Animated.View 
         style={{
-          zIndex: 100,
-          transform: [{translateY: translateY}], 
+          transform: [{translateY: translateY}],
           backgroundColor: iOSCollapsedColor, 
           position: 'absolute', 
-          width: '100%', 
-          height: navigationHeight}}/>
+          width: '100%',
+          zIndex: 0,
+          height: navigationHeight,
+          // borderBottomWidth: 0.5,
+          // borderBottomColor: 'lightgrey'
+        }}/>
     )
   }
 }
@@ -215,7 +218,7 @@ export const withCollapsible = (WrappedScreen, collapsibleParams = {}, tabNaviga
       this.onScroll = this.animatedY.map(
         animatedY => Animated.event(
           [{nativeEvent: {contentOffset: {y: animatedY}}}],
-          {useNativeDriver: Platform.select({ios: true, android: true, web: false})}
+          {useNativeDriver: true}
         )
       );
 
